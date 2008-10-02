@@ -42,6 +42,9 @@ sub read_handle {
 
   my $first = $handle->getline;
 
+  chomp $first;
+  return [] if $first eq 'Mail queue is empty';
+
   Carp::confess("first line did not appear to be first line of mailq output")
     unless $first =~ m{\A-Queue ID-};
 
