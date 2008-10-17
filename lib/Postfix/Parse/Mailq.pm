@@ -31,14 +31,24 @@ keep working, or keep pretty close to what you see here now.
 
 =method read_string
 
+  my $entries = Postfix::Parse::Mailq->read_string($string, \%arg);
+
 This methods read the output of postfix's F<mailq> from a file (by name), a
 filehandle, or a string, respectively.  They return an arrayref of hashrefs,
 each hashref representing one entry in the queue as reported by F<mailq>.
 
+Valid arguments are:
+
+  spool - a hashref of { queue_id -> spool_name } pairs
+          if given, this will be used to attempt to indicate in which
+          spool messages currently are; it is not entirely reliable (race!)
+
 =cut
 
 sub read_handle {
-  my ($self, $handle) = @_;
+  my ($self, $handle, $arg) = @_;
+  $arg ||= {};
+  $arg->{spool} ||= {};
 
   my $first = $handle->getline;
 
@@ -52,12 +62,20 @@ sub read_handle {
   my @entries;
   LINE: while (my $line = $handle->getline) {
     if ($line eq "\n") {
-      push @entries, $self->parse_block(\@current);
+      my $entry = $self->parse_block(\@current);
+      $entry->{spool} = $arg->{spool}{ $entry->{queue_id} } if $arg->{spool};
+      push @entries, $entry;
       @current = ();
       next LINE;
     }
 
     push @current, $line;
+  }
+
+  if (@current) {
+    my $entry = $self->parse_block(\@current);
+    $entry->{spool} = $arg->{spool}{ $entry->{queue_id} } if $arg->{spool};
+    push @entries, $entry;
   }
 
   return \@entries;
@@ -73,7 +91,7 @@ returns data about the entry.
 =cut
 
 my %STATUS_FOR = (
-  '!' => 'hold',
+  '!' => 'held',
   '*' => 'active',
 );
 
