@@ -48,7 +48,6 @@ Valid arguments are:
 sub read_handle {
   my ($self, $handle, $arg) = @_;
   $arg ||= {};
-  $arg->{spool} ||= {};
 
   my $first = $handle->getline;
 
