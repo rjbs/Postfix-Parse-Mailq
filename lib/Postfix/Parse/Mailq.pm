@@ -48,6 +48,7 @@ Valid arguments are:
 sub read_handle {
   my ($self, $handle, $arg) = @_;
   $arg ||= {};
+  $arg->{spool} ||= {};
 
   my $first = $handle->getline;
 
@@ -71,7 +72,7 @@ sub read_handle {
     push @current, $line;
   }
 
-  if (@current) {
+  if (@current and $current[0] !~ /^-- \d+ .?bytes/i) {
     my $entry = $self->parse_block(\@current);
     $entry->{spool} = $arg->{spool}{ $entry->{queue_id} } if $arg->{spool};
     push @entries, $entry;

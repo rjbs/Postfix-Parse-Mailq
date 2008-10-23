@@ -18,6 +18,8 @@ my $mailq = <<'END_MAILQ';
 
 20B11AF9A1   221654 Fri Oct 17 12:38:55  devnull@example.me
                                          senor+bonbon@example.su
+
+-- 8531991 Kbytes in 4 Requests.
 END_MAILQ
 
 my $entries = Postfix::Parse::Mailq->read_string($mailq);
