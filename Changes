@@ -1,6 +1,8 @@
 Revision history for Postfix-Parse-Mailq
 
 {{$NEXT}}
+
+1.002     2013-05-29 09:33:28 America/New_York
           avoid warnings, do not warn on the elusive "zero recipient message"
 
 1.001     2008-10-24
