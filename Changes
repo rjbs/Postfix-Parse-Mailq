@@ -1,5 +1,8 @@
 Revision history for Postfix-Parse-Mailq
 
+{{$NEXT}}
+          avoid warnings, do not warn on the elusive "zero recipient message"
+
 1.001     2008-10-24
           avoid warnings, do not choke on the last line of mailq output
 
