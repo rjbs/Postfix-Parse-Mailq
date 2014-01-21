@@ -56,7 +56,7 @@ sub read_handle {
   return [] if $first eq 'Mail queue is empty';
 
   Carp::confess("first line did not appear to be first line of mailq output")
-    unless $first =~ m{\A-Queue ID-};
+    unless $first =~ m{\A-+Queue ID-+};
 
   my @current;
   my @entries;
@@ -107,7 +107,7 @@ sub parse_block {
 
   my ($qid, $status_chr, $size, $date, $sender) = $first =~ m/
     \A
-    ([A-F0-9]+)
+    ([A-F0-9]+|[0-9B-Zb-z]+)
     ([*!])?
     \s+
     (\d+)
