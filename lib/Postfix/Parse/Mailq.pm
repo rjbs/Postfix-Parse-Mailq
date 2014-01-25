@@ -1,8 +1,9 @@
 use strict;
 use warnings;
 package Postfix::Parse::Mailq;
-use Mixin::Linewise::Readers -readers;
 # ABSTRACT: parse the output of the postfix mailq command
+
+use Mixin::Linewise::Readers -readers;
 
 =head1 SYNOPSIS
 
