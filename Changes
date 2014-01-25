@@ -1,6 +1,8 @@
 Revision history for Postfix-Parse-Mailq
 
 {{$NEXT}}
+
+1.004     2014-01-25 11:41:43-05:00 America/New_York
         - add support for long queue ids (thanks,Johan Carlquist!)
 
 1.003     2013-10-15 21:52:03 America/New_York
