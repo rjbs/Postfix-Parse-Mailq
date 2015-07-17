@@ -19,7 +19,11 @@ my $mailq = <<'END_MAILQ';
 20B11AF9A1   221654 Fri Oct 17 12:38:55  devnull@example.me
                                          senor+bonbon@example.su
 
--- 8531991 Kbytes in 4 Requests.
+2CD706394A     2912 Wed Jul 15 20:29:29  shredder@example.party
+                (connect to mx.example.ninja[1.2.3.4]:25: Connection timed out)
+                                         jago@example.ninja
+
+-- 8534903 Kbytes in 5 Requests.
 END_MAILQ
 
 my $entries = Postfix::Parse::Mailq->read_string($mailq);
@@ -74,6 +78,18 @@ my $want = [
    'size' => '221654',
    'status' => 'queued'
  },
+ {
+   'date' => 'Wed Jul 15 20:29:29',
+   'error_string' => '(connect to mx.example.ninja[1.2.3.4]:25: Connection timed out)',
+   'queue_id' => '2CD706394A',
+   'spool' => undef,
+   'remaining_rcpts' => [
+     'jago@example.ninja',
+   ],
+   'sender' => 'shredder@example.party',
+   'size' => '2912',
+   'status' => 'queued'
+ },
 ];
 
 is_deeply($entries, $want, 'we parsed correctly');
@@ -85,8 +101,8 @@ is_deeply($entries, $want, 'we parsed correctly');
       spool => { '20B11AF9A1' => 'incoming' },
     },
   );
-  
-  $want->[-1]->{spool} = 'incoming';
+
+  $want->[-2]->{spool} = 'incoming';
 
   is_deeply($entries, $want, 'also works with some spool contents');
 }

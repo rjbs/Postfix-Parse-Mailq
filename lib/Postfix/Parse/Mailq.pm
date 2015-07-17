@@ -101,9 +101,10 @@ sub parse_block {
 
   chomp @$block;
   my $first = shift @$block;
-  my $error = defined $block->[0] && $block->[0] =~ /\A\S/
+  my $error = defined $block->[0] && ($block->[0] =~ /\A\S/ || $block->[0] =~ /\A\s+\(/)
             ? (shift @$block)
             : undef;
+  $error =~ s/\A\s+// if defined $error;
   my @dest  = map { s/^\s+//; $_; } @$block;
 
   my ($qid, $status_chr, $size, $date, $sender) = $first =~ m/

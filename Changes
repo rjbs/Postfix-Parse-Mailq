@@ -1,6 +1,8 @@
 Revision history for Postfix-Parse-Mailq
 
 {{$NEXT}}
+        - report "(error: things on fire)" as error_string when it precedes the
+          recipient list
 
 1.004     2014-01-25 11:41:43-05:00 America/New_York
         - add support for long queue ids (thanks,Johan Carlquist!)
