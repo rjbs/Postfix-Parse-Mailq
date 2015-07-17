@@ -1,6 +1,8 @@
 Revision history for Postfix-Parse-Mailq
 
 {{$NEXT}}
+
+1.005     2015-07-17 18:55:54-04:00 America/New_York
         - report "(error: things on fire)" as error_string when it precedes the
           recipient list
 
